@@ -16,8 +16,7 @@ func LoggingMiddleware(next http.Handler) http.Handler {
 		uri := "mongodb+srv://markbironga:udJw5DUN7ikgPW0s@cluster0.ahklyvd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 		clientOptions := options.Client().ApplyURI(uri)
-
-		// Connect to MongoDB
+		//connect
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
@@ -26,7 +25,7 @@ func LoggingMiddleware(next http.Handler) http.Handler {
 			log.Fatal(err)
 		}
 
-		// Check the connection
+		//check
 		err = client.Ping(ctx, nil)
 		if err != nil {
 			log.Fatal(err)
@@ -34,9 +33,8 @@ func LoggingMiddleware(next http.Handler) http.Handler {
 
 		fmt.Println("Successfully connected to MongoDB Atlas!")
 
-		// do something
+		//ill add FETCH, PATCH, DELETE and POST 
 
-		// Close the connection when done
 		defer func() {
 			fmt.Println("Closing DB connection...")
 			done := make(chan bool)
