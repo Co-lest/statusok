@@ -15,6 +15,7 @@ func main() {
 	port := ":8080"
 
 	mux.HandleFunc("/", handlers.HandleRoot)
+	mux.HandleFunc("/testimonials", handlers.GetTestimonials)
 	//mux.HandleFunc("port", handle)
 
 	wrappedMux := middlewares.LoggingMiddleware(mux)
