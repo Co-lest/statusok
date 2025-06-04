@@ -1,11 +1,11 @@
 package handlers
 
 import (
-    "context"
-    "encoding/json"
-    "log"
-    "net/http"
-    "time"
+	"net/http"
+	"encoding/json"
+	"context"
+	"time"
+	"log"
 
 	"go.mongodb.org/mongo-driver/bson"
     "go.mongodb.org/mongo-driver/bson/primitive"
@@ -13,13 +13,8 @@ import (
 	"statusok/middlewares"
 )
 
-type Testimonial struct {
-	ID primitive.ObjectID `bson:"_id,omitempty"`
-	Name string //..to be continued
-}
-
-func GetTestimonials(w http.ResponseWriter, r *http.Request){
-    collection := middlewares.TestimonialsDB.Collection("Testimonial")
+func GetPortfolio(w http.ResponseWriter, r *http.Request) {
+	    collection := middlewares.TestimonialsDB.Collection("Testimonial")
     
     // Create a context with timeout
     ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
