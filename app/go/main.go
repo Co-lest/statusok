@@ -16,7 +16,7 @@ func main() {
 
 	mux.HandleFunc("/", handlers.HandleRoot)
 	mux.HandleFunc("/testimonials", handlers.GetTestimonials)
-	//mux.HandleFunc("port", handle)
+	mux.HandleFunc("/portfolio", handlers.GetPortfolio)
 
 	wrappedMux := middlewares.LoggingMiddleware(mux)
 	

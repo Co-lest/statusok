@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"sync"
 	"time"
 
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -22,9 +24,14 @@ var (
 
 func InitializeDB() error {
 	dbOnce.Do(func() {
-		uri := "mongodb+srv://markbironga:udJw5DUN7ikgPW0s@cluster0.ahklyvd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+		err := godotenv.Load()
+		if err != nil {
+			log.Fatal("Error loading .env file")
+		}
 
-		clientOptions := options.Client().ApplyURI(uri)
+		dbURI := os.Getenv("DB_URI")
+
+		clientOptions := options.Client().ApplyURI(dbURI)
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
@@ -40,8 +47,8 @@ func InitializeDB() error {
 			return
 		}
 
-		ProfileDB = dbClient.Database("videoweb")
-		TestimonialsDB = dbClient.Database("Videowe2")
+		TestimonialsDB = dbClient.Database("videoweb")
+		ProfileDB = dbClient.Database("Videowe2")
 
 		fmt.Printf("Connected to databases: %s, %s\n", ProfileDB.Name(), TestimonialsDB.Name())
 	})
